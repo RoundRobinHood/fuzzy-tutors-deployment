@@ -1,0 +1,3 @@
+[submodule "app/src"]
+	path = app/src
+	url = https://github.com/Exequtech/fuzzy-tutors.git

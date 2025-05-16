@@ -1,0 +1,49 @@
+services:
+  app:
+    build: ./app
+
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+
+    depends_on:
+      - db
+
+    environment:
+      DB_HOST: db
+      DB_USER: adam
+      DB_PASS: ${DB_PASS:-mypass}
+      DB_NAME: fuzzy_tutors
+
+      NR_EMAIL: ${NR_EMAIL}
+      NR_PASS: ${NR_PASS}
+      NR_ENC: ${NR_ENC:-tls}
+      NR_PORT: ${NR_PORT:-465}
+
+      BOOTSTRAP_USER: ${BOOTSTRAP_USER}
+      BOOTSTRAP_EMAIL: ${BOOTSTRAP_EMAIL}
+      BOOTSTRAP_PASSWORD: ${BOOTSTRAP_PASS}
+
+      DOMAIN_NAME: ${DOMAIN_NAME:-localhost}
+
+    volumes:
+      - ./app/certs/self.crt:/etc/apache2/ssl/self.crt
+      - ./app/certs/self.key:/etc/apache2/ssl/self.key
+
+  db:
+    image: mysql:latest
+
+    restart: always
+
+    expose:
+      - "3306"
+
+    environment:
+      MYSQL_USER: adam
+      MYSQL_PASSWORD: ${DB_PASS:-mypass}
+      MYSQL_DATABASE: fuzzy_tutors
+
+      MYSQL_ROOT_PASSWORD: rootpass
+
+    volumes:
+      - ./db_data:/var/lib/mysql
