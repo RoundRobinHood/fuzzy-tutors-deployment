@@ -25,7 +25,7 @@ those ports be managed by a reverse proxy like NGINX instead.
 For simplified functionality, the server uses simple self-signed certs (which
 are not trusted by any secure piece of software). It's recommended that secure
 HTTPS connections are handled externally, and both HTTP and HTTPS ports are
-proxied to the web server on a different port.
+proxied to the web server from different ports.
 
 See the `.env-template` file for port variables to customize which are exposed
 to the server.
